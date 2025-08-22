@@ -21,6 +21,7 @@ export const OAUTH_DATA = {
       dark: require('assets/social/github-dark.svg').default as string,
     },
   },
+  kakao: require('assets/social/kakao.svg').default as string,
   telegram: require('assets/social/telegram.svg').default as string,
 } as const;
 

@@ -70,3 +70,12 @@
 .full::after {
   content: attr(title);
 }
+
+.kakao {
+  background-color: #FEE102;
+  color: #191919;
+}
+
+.kakao:hover {
+  background-color: #f8de00;
+}

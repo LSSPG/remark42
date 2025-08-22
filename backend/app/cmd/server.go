@@ -108,6 +108,7 @@ type ServerCommand struct {
 		Twitter   AuthGroup  `group:"twitter" namespace:"twitter" env-namespace:"TWITTER" description:"[deprecated, doesn't work] Twitter OAuth"`
 		Patreon   AuthGroup  `group:"patreon" namespace:"patreon" env-namespace:"PATREON" description:"Patreon OAuth"`
 		Discord   AuthGroup  `group:"discord" namespace:"discord" env-namespace:"DISCORD" description:"Discord OAuth"`
+		Kakao     AuthGroup  `group:"kakao" namespace:"kakao" env-namespace:"KAKAO" description:"Kakao OAuth"`
 		Telegram  bool       `long:"telegram" env:"TELEGRAM" description:"Enable Telegram auth (using token from telegram.token)"`
 		Dev       bool       `long:"dev" env:"DEV" description:"enable dev (local) oauth2"`
 		Anonymous bool       `long:"anon" env:"ANON" description:"enable anonymous login"`
@@ -323,6 +324,7 @@ func (s *ServerCommand) Execute(_ []string) error {
 		"AUTH_YANDEX_CSEC",
 		"AUTH_PATREON_CSEC",
 		"AUTH_DISCORD_CSEC",
+		"AUTH_KAKAO_CSEC",
 		"TELEGRAM_TOKEN",
 		"SMTP_PASSWORD",
 		"ADMIN_PASSWD",
@@ -956,6 +958,11 @@ func (s *ServerCommand) addAuthProviders(authenticator *auth.Service) error {
 	}
 	if s.Auth.Discord.CID != "" && s.Auth.Discord.CSEC != "" {
 		authenticator.AddProvider("discord", s.Auth.Discord.CID, s.Auth.Discord.CSEC)
+		providersCount++
+	}
+
+	if s.Auth.Kakao.CID != "" && s.Auth.Kakao.CSEC != "" {
+		authenticator.AddProvider("kakao", s.Auth.Kakao.CID, s.Auth.Kakao.CSEC)
 		providersCount++
 	}
 

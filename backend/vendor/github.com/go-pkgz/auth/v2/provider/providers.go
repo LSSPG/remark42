@@ -213,6 +213,36 @@ func NewMicrosoft(p Params) Oauth2Handler {
 	})
 }
 
+// NewKakao makes kakao oauth2 provider
+func NewKakao(p Params) Oauth2Handler {
+	return initOauth2Handler(p, Oauth2Handler{
+		name:     "kakao",
+		endpoint: oauth2.Endpoint{
+			AuthURL:  "https://kauth.kakao.com/oauth/authorize",
+			TokenURL: "https://kauth.kakao.com/oauth/token",
+		},
+		scopes:  []string{},
+		infoURL: "https://kapi.kakao.com/v2/user/me",
+		mapUser: func(data UserData, _ []byte) token.User {
+			userInfo := token.User{
+				ID:      "kakao_" + token.HashID(sha1.New(), data.Value("id")),
+				Name:    data.Value("properties.nickname"),
+				Picture: data.Value("properties.profile_image"),
+			}
+			if email := data.Value("kakao_account.email"); email != "" {
+				userInfo.SetAttr("email", email)
+			}
+			if userInfo.Name == "" {
+				userInfo.Name = "noname_" + userInfo.ID[8:12]
+			}
+			for k, v := range p.UserAttributes {
+				userInfo.SetStrAttr(v, data.Value(k))
+			}
+			return userInfo
+		},
+	})
+}
+
 // NewPatreon makes patreon oauth2 provider
 func NewPatreon(p Params) Oauth2Handler {
 	type uinfo struct {
