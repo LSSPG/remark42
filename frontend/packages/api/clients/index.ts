@@ -26,6 +26,7 @@ export type OAuthProvider =
 	| 'microsoft'
 	| 'patreon'
 	| 'discord'
+	| 'kakao'
 	| 'telegram'
 	| 'dev'
 export type FormProvider = 'email' | 'anonymous'

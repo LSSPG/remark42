@@ -216,7 +216,7 @@ func NewMicrosoft(p Params) Oauth2Handler {
 // NewKakao makes kakao oauth2 provider
 func NewKakao(p Params) Oauth2Handler {
 	return initOauth2Handler(p, Oauth2Handler{
-		name:     "kakao",
+		name: "kakao",
 		endpoint: oauth2.Endpoint{
 			AuthURL:  "https://kauth.kakao.com/oauth/authorize",
 			TokenURL: "https://kauth.kakao.com/oauth/token",
@@ -228,9 +228,6 @@ func NewKakao(p Params) Oauth2Handler {
 				ID:      "kakao_" + token.HashID(sha1.New(), data.Value("id")),
 				Name:    data.Value("properties.nickname"),
 				Picture: data.Value("properties.profile_image"),
-			}
-			if email := data.Value("kakao_account.email"); email != "" {
-				userInfo.SetAttr("email", email)
 			}
 			if userInfo.Name == "" {
 				userInfo.Name = "noname_" + userInfo.ID[8:12]

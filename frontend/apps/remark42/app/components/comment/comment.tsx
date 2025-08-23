@@ -69,7 +69,17 @@ export class Comment extends Component<CommentProps, State> {
    * Defines whether current client is admin
    */
   isAdmin = (): boolean => {
-    return Boolean(this.props.user?.admin);
+    // primary: backend-provided admin flag
+    if (this.props.user?.admin) return true;
+    // fallback: check configured admins list (useful if token/admin flag missing)
+    const currentUserId = this.props.user?.id;
+    if (!currentUserId) return false;
+    try {
+      const admins = StaticStore.config.admins || [];
+      return admins.includes(currentUserId);
+    } catch {
+      return false;
+    }
   };
 
   /**
@@ -298,16 +308,16 @@ export class Comment extends Component<CommentProps, State> {
         props.view === 'preview'
           ? getTextSnippet(props.data.text)
           : props.data.delete
-          ? intl.formatMessage(messages.deletedComment)
-          : props.data.text,
+            ? intl.formatMessage(messages.deletedComment)
+            : props.data.text,
       time: new Date(props.data.time),
       orig: isEditing
         ? props.data.orig &&
-          props.data.orig.replace(/&[#A-Za-z0-9]+;/gi, (entity) => {
-            const span = document.createElement('span');
-            span.innerHTML = entity;
-            return span.innerText;
-          })
+        props.data.orig.replace(/&[#A-Za-z0-9]+;/gi, (entity) => {
+          const span = document.createElement('span');
+          span.innerHTML = entity;
+          return span.innerText;
+        })
         : props.data.orig,
       user: props.data.user,
     };

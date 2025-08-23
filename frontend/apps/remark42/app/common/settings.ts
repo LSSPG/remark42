@@ -19,12 +19,11 @@ export const rawParams = parseQuery();
 export const maxShownComments = parseNumber(rawParams.max_shown_comments) ?? MAX_SHOWN_ROOT_COMMENTS;
 export const isEmailSubscription = rawParams.show_email_subscription !== 'false';
 export const isTelegramSubscription = rawParams.show_telegram_subscription !== 'false';
-export const isRssSubscription =
-  rawParams.show_rss_subscription === undefined || rawParams.show_rss_subscription !== 'false';
+export const isRssSubscription = rawParams.show_rss_subscription === 'true';
 export const theme = (rawParams.theme = includes(THEMES, rawParams.theme) ? rawParams.theme : THEMES[0]);
 export const siteId = rawParams.site_id || 'remark';
 export const pageTitle = rawParams.page_title;
 export const url = rawParams.url;
 export const token = rawParams.token;
-export const locale = rawParams.locale || 'en';
+export const locale = rawParams.locale || 'ko';
 export const noFooter = rawParams.no_footer === 'true';

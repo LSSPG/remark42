@@ -262,6 +262,8 @@ func (s *Service) addProviderByName(name string, p provider.Params) {
 		prov = provider.NewPatreon(p)
 	case "discord":
 		prov = provider.NewDiscord(p)
+	case "kakao":
+		prov = provider.NewKakao(p)
 	case "dev":
 		prov = provider.NewDev(p)
 	default:

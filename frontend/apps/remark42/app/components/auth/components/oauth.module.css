@@ -72,10 +72,10 @@
 }
 
 .kakao {
-  background-color: #FEE102;
-  color: #191919;
+  background-color: var(--kakao-background);
+  color: var(--kakao-text);
 }
 
 .kakao:hover {
-  background-color: #f8de00;
+  background-color: var(--kakao-background-hover);
 }

@@ -7,12 +7,12 @@ find . -regex '.*\.\(html\|js\|mjs\)$' -print -exec sed -i "s|{% REMARK_URL %}|$
 if [ -n "${SITE}" ]; then
 	sep=','
 	case ${SITE} in
-	*"$sep"*)
+	*"$sep"*) 
 		export single_site_id=${SITE%%"$sep"*}
-		echo "multiple site IDs passed in SITE (\"${SITE}\"): using \"${single_site_id}\" in frontend site_id"
+		echo "multiple site IDs passed in SITE ("${SITE}"): using "${single_site_id}" in frontend site_id"
 		;;
 	*)
-		echo "using non-standard frontend site_id from SITE variable (\"${SITE}\") instead of \"remark\""
+		echo "using non-standard frontend site_id from SITE variable ("${SITE}") instead of "remark""
 		export single_site_id=$SITE
 		;;
 	esac
@@ -26,6 +26,6 @@ if [ -d "/srv/var" ]; then
 else
 	echo "ERROR: /srv/var doesn't exist, which means that state of the application"
 	echo "ERROR: will be lost on container stop or restart."
-	echo "ERROR: Please mount local directory to /srv/var in order for it to work."
+	eecho "ERROR: Please mount local directory to /srv/var in order for it to work."
 	exit 199
 fi
